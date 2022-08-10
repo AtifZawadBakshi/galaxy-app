@@ -18,3 +18,23 @@ export const REMOVE = (item) => {
     payload: item,
   };
 };
+export const ADD_WISHLIST = (item) => {
+  return {
+    type: "ADD_WISH",
+    payload: item,
+  };
+};
+
+export const DLT_WISHLIST = (id) => {
+  return {
+    type: "DLT_WISH",
+    payload: id,
+  };
+};
+
+export const RMV_WISHLIST = (item) => {
+  return {
+    type: "RMV_WISH",
+    payload: item,
+  };
+};

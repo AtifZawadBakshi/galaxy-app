@@ -6,6 +6,7 @@ import Checkout from "./pages/Checkout";
 import ProductDetails from "./pages/ProductDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Compare from "./pages/Compare";
 function App() {
   return (
     <>
@@ -90,6 +91,7 @@ function App() {
           <Route path="product-details" element={<ProductDetails />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="compare" element={<Compare />} />
         </Routes>
       </BrowserRouter>
     </>

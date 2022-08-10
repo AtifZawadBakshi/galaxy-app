@@ -3,26 +3,52 @@ import {
   CompareArrowsOutlined,
   PreviewOutlined,
   ShoppingBagOutlined,
+  FavoriteBorder,
+  ShoppingCartOutlined,
 } from "@mui/icons-material";
-import { ButtonGroup, Button } from "@mui/material";
+
+import { ButtonGroup, Button, Stack, Snackbar, Alert } from "@mui/material";
 import React, { useState } from "react";
 import "./style.css";
 import Cardsdata from "../DemoData/DemoData";
 import { useDispatch } from "react-redux";
-import { ADD } from "../../redux/actions/action";
+import { ADD, ADD_WISHLIST } from "../../redux/actions/action";
+
 const ProductCategoryListContent = () => {
-  const [isHoveringCard, setIsHoveringCard] = useState(false);
   const [data, setData] = useState(Cardsdata);
+
+  const [wishlistSuccess, SetWishlistSuccess] = React.useState(false);
+  const handleWishlistSuccessClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    SetWishlistSuccess(false);
+  };
+
+  const [cartSuccess, SetCartSuccess] = React.useState(false);
+  const handleCartSuccessClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    SetCartSuccess(false);
+  };
+
+  const [isHoveringCard, setIsHoveringCard] = useState(false);
   const handleMouseOver = () => {
     setIsHoveringCard(true);
   };
-
   const handleMouseOut = () => {
     setIsHoveringCard(false);
   };
+
   const dispatch = useDispatch(Cardsdata);
   const send = (event) => {
     dispatch(ADD(event));
+    SetCartSuccess(true);
+  };
+  const send_wishlist = (event) => {
+    dispatch(ADD_WISHLIST(event));
+    SetWishlistSuccess(true);
   };
 
   return (
@@ -130,14 +156,35 @@ const ProductCategoryListContent = () => {
                 </div>
 
                 <div className="d-flex justify-content-center align-items-center my-3 px-1">
-                  <ButtonGroup variant="outlined">
-                    <Button onClick={() => send(element)}>
-                      <AddShoppingCart />
+                  <ButtonGroup sx={{ color: "black" }}>
+                    <Button
+                      onClick={() => send_wishlist(element)}
+                      sx={{ color: "black" }}
+                    >
+                      <FavoriteBorder />
                     </Button>
-                    <Button>
+                    <Snackbar
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                      }}
+                      open={wishlistSuccess}
+                      autoHideDuration={6000}
+                      onClose={handleWishlistSuccessClose}
+                    >
+                      <Alert
+                        variant="filled"
+                        severity="success"
+                        onClose={handleWishlistSuccessClose}
+                      >
+                        Successfully Added to Wishlist
+                      </Alert>
+                    </Snackbar>
+
+                    <Button sx={{ color: "black" }}>
                       <PreviewOutlined />
                     </Button>
-                    <Button>
+                    <Button sx={{ color: "black" }}>
                       <CompareArrowsOutlined />
                     </Button>
                   </ButtonGroup>
@@ -154,23 +201,42 @@ const ProductCategoryListContent = () => {
                       alignItems: "center",
                       borderRadius: "5px",
                     }}
+                    onClick={() => send(element)}
                   >
-                    <ShoppingBagOutlined />
-                    Shup Now
+                    <ShoppingCartOutlined />
+                    Add to Cart
                   </button>
+                  <Snackbar
+                    maxSnack={3}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "center",
+                    }}
+                    open={cartSuccess}
+                    autoHideDuration={6000}
+                    onClose={handleCartSuccessClose}
+                  >
+                    <Alert
+                      variant="filled"
+                      severity="success"
+                      onClose={handleCartSuccessClose}
+                    >
+                      Successfully Added to Cart
+                    </Alert>
+                  </Snackbar>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      <div className="infinitpaginOuter">
+      {/* <div className="infinitpaginOuter">
         <div className="infinitpagin">
           <a href="#" className="btn loadMore">
             Load More
           </a>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

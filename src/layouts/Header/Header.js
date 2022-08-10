@@ -2,6 +2,7 @@ import {
   FavoriteBorder,
   SearchOutlined,
   ShoppingCart,
+  ShoppingCartOutlined,
 } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -25,9 +26,9 @@ const Input = styled.input`
 `;
 const Header = () => {
   const getdata = useSelector((state) => state.cartreducer.carts);
+  const getwishlist = useSelector((state) => state.wishlistreducer.wishlist);
   const dispatch = useDispatch();
   const [price, setPrice] = useState(0);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -82,7 +83,6 @@ const Header = () => {
                 type="button"
                 className="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open"
               >
-                <i className="icon anm anm-times-l" />
                 <i className="anm anm-bars-r" />
               </button>
             </div>
@@ -535,7 +535,7 @@ const Header = () => {
           </div>
           <div className="col-4 col-sm-3 col-md-3 col-lg-2">
             <div className="d-flex justify-content-between align-items-center">
-              <Badge badgeContent={1} color="secondary">
+              <Badge badgeContent={getwishlist.length} color="secondary">
                 <FavoriteBorder sx={{ fontSize: 30, cursor: "pointer" }} />
               </Badge>
 
@@ -548,7 +548,9 @@ const Header = () => {
                 onClick={handleClick}
               >
                 <Badge badgeContent={getdata.length} color="secondary">
-                  <ShoppingCart sx={{ fontSize: 30, cursor: "pointer" }} />
+                  <ShoppingCartOutlined
+                    sx={{ fontSize: 30, cursor: "pointer" }}
+                  />
                 </Badge>
               </IconButton>
               <Menu
