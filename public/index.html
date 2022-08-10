@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -10,34 +10,141 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Samsung Bangladesh | Mobile | TV | Home Appliances</title>
+    <link rel="stylesheet" href="/plugins.css" ></link>
+    <link rel="stylesheet" href="/responsive.css" ></link>
+    <link rel="stylesheet" href="/style.css" ></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="/assets/css/plugins.css" />
+    <!-- Bootstap CSS -->
+     
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/responsive.css" />
+    <!-- Including Jquery -->
+    <script src="/assets/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="/assets/js/vendor/jquery.cookie.js"></script>
+    <script src="/assets/js/vendor/wow.min.js"></script>
+    <!-- Includin/g Javascript -->
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/lazysizes.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script>
+      $("a[href='#top']").click(function () {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+      });
+    </script>
+    <!--For Newsletter Popup-->
+    <script>
+      jQuery(document).ready(function () {
+        jQuery(".closepopup").on("click", function () {
+          jQuery("#popup-container").fadeOut();
+          jQuery("#modalOverly").fadeOut();
+        });
+
+        var visits = jQuery.cookie("visits") || 0;
+        visits++;
+        jQuery.cookie("visits", visits, { expires: 1, path: "/" });
+        console.debug(jQuery.cookie("visits"));
+        if (jQuery.cookie("visits") > 1) {
+          jQuery("#modalOverly").hide();
+          jQuery("#popup-container").hide();
+        } else {
+          var pageHeight = jQuery(document).height();
+          jQuery('<div id="modalOverly"></div>').insertBefore("body");
+          jQuery("#modalOverly").css("height", pageHeight);
+          jQuery("#popup-container").show();
+        }
+        if (jQuery.cookie("noShowWelcome")) {
+          jQuery("#popup-container").hide();
+          jQuery("#active-popup").hide();
+        }
+      });
+
+      jQuery(document).mouseup(function (e) {
+        var container = jQuery("#popup-container");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+          container.fadeOut();
+          jQuery("#modalOverly").fadeIn(200);
+          jQuery("#modalOverly").hide();
+        }
+      });
+
+      /*--------------------------------------
+			Promotion / Notification Cookie Bar 
+		  -------------------------------------- */
+      if (Cookies.get("promotion") != "true") {
+        $(".notification-bar").show();
+      }
+      $(".close-announcement").on("click", function () {
+        $(".notification-bar").slideUp();
+        Cookies.set("promotion", "true", { expires: 1 });
+        return false;
+      });
+    </script>
+    <!--End For Newsletter Popup-->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <!--For Newsletter Popup-->
+    <script>
+      jQuery(document).ready(function () {
+        jQuery(".closepopup").on("click", function () {
+          jQuery("#popup-container").fadeOut();
+          jQuery("#modalOverly").fadeOut();
+        });
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        var visits = jQuery.cookie("visits") || 0;
+        visits++;
+        jQuery.cookie("visits", visits, { expires: 1, path: "/" });
+        console.debug(jQuery.cookie("visits"));
+        if (jQuery.cookie("visits") > 1) {
+          jQuery("#modalOverly").hide();
+          jQuery("#popup-container").hide();
+        } else {
+          var pageHeight = jQuery(document).height();
+          jQuery('<div id="modalOverly"></div>').insertBefore("body");
+          jQuery("#modalOverly").css("height", pageHeight);
+          jQuery("#popup-container").show();
+        }
+        if (jQuery.cookie("noShowWelcome")) {
+          jQuery("#popup-container").hide();
+          jQuery("#active-popup").hide();
+        }
+      });
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+      jQuery(document).mouseup(function (e) {
+        var container = jQuery("#popup-container");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+          container.fadeOut();
+          jQuery("#modalOverly").fadeIn(200);
+          jQuery("#modalOverly").hide();
+        }
+      });
+
+      /*--------------------------------------
+			Promotion / Notification Cookie Bar 
+		  -------------------------------------- */
+      if (Cookies.get("promotion") != "true") {
+        $(".notification-bar").show();
+      }
+      $(".close-announcement").on("click", function () {
+        $(".notification-bar").slideUp();
+        Cookies.set("promotion", "true", { expires: 1 });
+        return false;
+      });
+    </script>
+    <!--End For Newsletter Popup-->
   </body>
 </html>
