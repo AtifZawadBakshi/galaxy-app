@@ -38,3 +38,23 @@ export const RMV_WISHLIST = (item) => {
     payload: item,
   };
 };
+export const ADD_COMPARE = (item) => {
+  return {
+    type: "ADD_COMP",
+    payload: item,
+  };
+};
+
+export const DLT_COMPARE = (id) => {
+  return {
+    type: "DLT_COMP",
+    payload: id,
+  };
+};
+
+export const RMV_COMPARE = (item) => {
+  return {
+    type: "RMV_COMP",
+    payload: item,
+  };
+};

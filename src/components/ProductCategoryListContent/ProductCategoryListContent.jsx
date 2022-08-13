@@ -1,8 +1,6 @@
 import {
-  AddShoppingCart,
   CompareArrowsOutlined,
   PreviewOutlined,
-  ShoppingBagOutlined,
   FavoriteBorder,
   ShoppingCartOutlined,
   Close,
@@ -12,19 +10,33 @@ import {
   LocalMallOutlined,
 } from "@mui/icons-material";
 
-import { ButtonGroup, Button, Stack, Snackbar, Alert } from "@mui/material";
+import { ButtonGroup, Button, Snackbar, Alert } from "@mui/material";
 import React, { useState } from "react";
 import "./style.css";
 import Cardsdata from "../DemoData/DemoData";
 import { useDispatch } from "react-redux";
-import { ADD, ADD_WISHLIST } from "../../redux/actions/action";
-import ProductViewModal from "../ProductViewModal/ProductViewModal";
+import { ADD, ADD_WISHLIST, ADD_COMPARE } from "../../redux/actions/action";
 import Modal from "react-bootstrap/Modal";
+
+// import ProductViewModal from "../ProductViewModal/ProductViewModal";
 const ProductCategoryListContent = () => {
   const [data, setData] = useState(Cardsdata);
 
   const [modalShow, setModalShow] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [modalProductQuantity, setModalProductQuantity] = useState(0);
+
+  const handleModalProductQuantityIncrease = (event) => {
+    event.preventDefault();
+    let qnty = modalProductQuantity + 1;
+    setModalProductQuantity(qnty);
+  };
+  const handleModalProductQuantityDecrease = (event) => {
+    event.preventDefault();
+    console.log(event);
+    let qnty = modalProductQuantity - 1;
+    setModalProductQuantity(qnty);
+  };
   const [wishlistSuccess, SetWishlistSuccess] = useState(false);
   const handleWishlistSuccessClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -33,7 +45,7 @@ const ProductCategoryListContent = () => {
     SetWishlistSuccess(false);
   };
 
-  const [cartSuccess, SetCartSuccess] = React.useState(false);
+  const [cartSuccess, SetCartSuccess] = useState(false);
   const handleCartSuccessClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -41,12 +53,12 @@ const ProductCategoryListContent = () => {
     SetCartSuccess(false);
   };
 
-  const [isHoveringCard, setIsHoveringCard] = useState(false);
-  const handleMouseOver = () => {
-    setIsHoveringCard(true);
-  };
-  const handleMouseOut = () => {
-    setIsHoveringCard(false);
+  const [compareSuccess, SetCompareSuccess] = useState(false);
+  const handleCompareSuccessClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    SetCompareSuccess(false);
   };
 
   const dispatch = useDispatch(Cardsdata);
@@ -58,6 +70,12 @@ const ProductCategoryListContent = () => {
     dispatch(ADD_WISHLIST(event));
     SetWishlistSuccess(true);
   };
+
+  const send_compare = (event) => {
+    dispatch(ADD_COMPARE(event));
+    SetCompareSuccess(true);
+  };
+
   const modalonClick = (event) => {
     setModalShow(true);
     setModalData(event);
@@ -66,6 +84,7 @@ const ProductCategoryListContent = () => {
     setModalShow(false);
     setModalData(null);
   };
+
   return (
     <>
       <div className="productList product-load-more">
@@ -140,8 +159,6 @@ const ProductCategoryListContent = () => {
                   width: "15rem",
                   border: "none",
                 }}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
               >
                 <div
                   style={{
@@ -174,7 +191,15 @@ const ProductCategoryListContent = () => {
                   <ButtonGroup sx={{ color: "black" }}>
                     <Button
                       onClick={() => send_wishlist(element)}
-                      sx={{ color: "black" }}
+                      sx={{
+                        color: "black",
+                        borderColor: "black",
+                        ":hover": {
+                          borderColor: "black",
+                          backgroundColor: "#F0EFF4",
+                          transition: "all 0. 3s  ",
+                        },
+                      }}
                     >
                       <FavoriteBorder />
                     </Button>
@@ -197,34 +222,29 @@ const ProductCategoryListContent = () => {
                     </Snackbar>
 
                     <Button
-                      sx={{ color: "black" }}
+                      sx={{
+                        color: "black",
+                        borderColor: "black",
+                        ":hover": {
+                          borderColor: "black",
+                          backgroundColor: "#F0EFF4",
+                          transition: "all 0. 3s  ",
+                        },
+                      }}
                       onClick={() => modalonClick(element)}
                     >
                       <PreviewOutlined />
                     </Button>
-                    {/* {modalShow && (
-                      <ProductViewModal
-                        show={modalShow}
-                        onHide={modalonClose}
-                        element={modalData.modal}
-                      />
-                    )} */}
+
                     {modalData && (
                       <Modal
+                        transparent
                         centered
                         show={modalShow}
                         onHide={modalonClose}
                         size="lg"
+                        sx={{ borderRadius: "5px", opacity: "0" }}
                       >
-                        {/* <Modal.Header className="mt-2">
-                          <h3 style={{ fontSize: "20px" }}>{modalData.name}</h3>
-                          <h3 className="text-right">
-                            <Close
-                              onClick={modalonClose}
-                              style={{ cursor: "pointer" }}
-                            />
-                          </h3>
-                        </Modal.Header> */}
                         <Modal.Body>
                           <h3 className="text-right">
                             <Close
@@ -275,6 +295,9 @@ const ProductCategoryListContent = () => {
                                           border: "none",
                                         },
                                       }}
+                                      onclick={
+                                        handleModalProductQuantityDecrease
+                                      }
                                     >
                                       <Remove />
                                     </Button>
@@ -288,7 +311,7 @@ const ProductCategoryListContent = () => {
                                         marginTop: "5px",
                                       }}
                                     >
-                                      <h1>{element.qnty}</h1>
+                                      <h1>{modalProductQuantity}</h1>
                                     </span>
                                     <Button
                                       sx={{
@@ -303,6 +326,9 @@ const ProductCategoryListContent = () => {
                                           border: "none",
                                         },
                                       }}
+                                      onclick={
+                                        handleModalProductQuantityIncrease
+                                      }
                                     >
                                       <Add />
                                     </Button>
@@ -332,16 +358,55 @@ const ProductCategoryListContent = () => {
                                 <div class="col-lg-12 col-md-12 col-12 my-5">
                                   <div className="d-flex justify-content-left align-items-center">
                                     <div className="mr-3 ">
-                                      <FavoriteBorder />
-                                      <span>Add to wishlist</span>
-                                    </div>
-                                    <div className="vertical-middle mr-3">
-                                      <Loop />
-                                      <span>Compare</span>
+                                      <div className="d-flex justify-content-left align-items-center">
+                                        <Button
+                                          sx={{
+                                            border: "none",
+                                            color: "black",
+                                            textDecoration: "none",
+                                            ":hover": {
+                                              border: "none",
+                                            },
+                                          }}
+                                        >
+                                          <FavoriteBorder />
+                                          <h7>Wishlist</h7>
+                                        </Button>
+                                      </div>
                                     </div>
                                     <div className="mr-3">
-                                      <LocalMallOutlined />
-                                      <span>Buy now </span>
+                                      <div className="d-flex m-0 p-0 justify-content-center align-items-center">
+                                        <Button
+                                          sx={{
+                                            border: "none",
+                                            color: "black",
+                                            textDecoration: "none",
+                                            ":hover": {
+                                              border: "none",
+                                            },
+                                          }}
+                                        >
+                                          <Loop />
+                                          <h7>Compare</h7>
+                                        </Button>
+                                      </div>
+                                    </div>
+                                    <div className="mr-3">
+                                      <div className="d-flex m-0 p-0 justify-content-center align-items-center">
+                                        <Button
+                                          sx={{
+                                            border: "none",
+                                            color: "black",
+                                            textDecoration: "none",
+                                            ":hover": {
+                                              border: "none",
+                                            },
+                                          }}
+                                        >
+                                          <LocalMallOutlined />
+                                          <h7>Buy now </h7>
+                                        </Button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -352,9 +417,37 @@ const ProductCategoryListContent = () => {
                       </Modal>
                     )}
 
-                    <Button sx={{ color: "black" }}>
+                    <Button
+                      sx={{
+                        color: "black",
+                        borderColor: "black",
+                        ":hover": {
+                          borderColor: "black",
+                          backgroundColor: "#F0EFF4",
+                          transition: "all 0. 3s  ",
+                        },
+                      }}
+                      onClick={() => send_compare(element)}
+                    >
                       <CompareArrowsOutlined />
                     </Button>
+                    <Snackbar
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                      }}
+                      open={compareSuccess}
+                      autoHideDuration={6000}
+                      onClose={handleCompareSuccessClose}
+                    >
+                      <Alert
+                        variant="filled"
+                        severity="success"
+                        onClose={handleCompareSuccessClose}
+                      >
+                        Successfully Added to Compare List
+                      </Alert>
+                    </Snackbar>
                   </ButtonGroup>
                 </div>
 
@@ -375,7 +468,6 @@ const ProductCategoryListContent = () => {
                     Add to Cart
                   </button>
                   <Snackbar
-                    maxSnack={3}
                     anchorOrigin={{
                       vertical: "bottom",
                       horizontal: "center",

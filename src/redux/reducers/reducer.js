@@ -4,7 +4,9 @@ const INIT_STATE = {
 const INIT_STATE_WISH = {
   wishlist: [],
 };
-
+const INIT_STATE_COMPARE = {
+  comparelist: [],
+};
 export const cartreducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case "ADD_CART":
@@ -90,6 +92,52 @@ export const wishlistreducer = (state = INIT_STATE_WISH, action) => {
         return {
           ...state,
           wishlist: data,
+        };
+      }
+    default:
+      return state;
+  }
+};
+
+export const comparereducer = (state = INIT_STATE_COMPARE, action) => {
+  switch (action.type) {
+    case "ADD_COMP":
+      const ItemIndex = state.comparelist.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (ItemIndex >= 0) {
+        state.comparelist[ItemIndex].qnty += 1;
+      } else {
+        const temp = { ...action.payload, qnty: 1 };
+        return {
+          ...state,
+          comparelist: [...state.comparelist, temp],
+        };
+      }
+
+    case "DLT_COMP":
+      const data = state.comparelist.filter((c) => c.id !== action.payload);
+      return {
+        ...state,
+        comparelist: data,
+      };
+
+    case "RMV_COMP":
+      const ItemIndex_dec = state.comparelist.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (state.comparelist[ItemIndex_dec].qnty >= 1) {
+        const dltitem = (state.comparelist[ItemIndex_dec].qnty -= 1);
+
+        return {
+          ...state,
+          comparelist: [...state.comparelist],
+        };
+      } else if (state.comparelist[ItemIndex_dec].qnty === 1) {
+        const data = state.comparelist.filter((el) => el.id !== action.payload);
+        return {
+          ...state,
+          comparelist: data,
         };
       }
     default:

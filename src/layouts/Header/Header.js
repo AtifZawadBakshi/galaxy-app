@@ -1,7 +1,6 @@
 import {
   FavoriteBorder,
   SearchOutlined,
-  ShoppingCart,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
@@ -21,12 +20,15 @@ const InputBox = styled.div`
 const ContainerBox = styled.div`
   border: none;
 `;
+
 const Input = styled.input`
   border: none;
 `;
+
 const Header = () => {
   const getdata = useSelector((state) => state.cartreducer.carts);
   const getwishlist = useSelector((state) => state.wishlistreducer.wishlist);
+
   const dispatch = useDispatch();
   const [price, setPrice] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);

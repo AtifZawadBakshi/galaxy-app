@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Close } from "@mui/icons-material";
+import { Button } from "react-bootstrap";
 import SearchDrawer from "../components/SearchDrawer/SearchDrawer";
 import Footer from "../layouts/Footer/Footer";
 import Header from "../layouts/Header/Header";
 import MobileMenu from "../layouts/MobileMenu/MobileMenu";
 import ScollTop from "../layouts/ScollTop/ScollTop";
 import TopHeader from "../layouts/TopHeader/TopHeader";
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import LinearStepper from "../components/StepForm/Stepform";
-
+import { useSelector, useDispatch } from "react-redux";
+import { DLT_COMPARE } from "../redux/actions/action";
 const Compare = () => {
+  const getcomparelist = useSelector(
+    (state) => state.comparereducer.comparelist
+  );
+  const dispatch = useDispatch();
+  const dlt = (id) => {
+    dispatch(DLT_COMPARE(id));
+  };
+
   return (
     <div className="pageWrapper">
       <SearchDrawer />
@@ -27,228 +36,107 @@ const Compare = () => {
           </div>
         </div>
         {/*End Page Title*/}
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
-              <div className="compare-page">
-                <div className="table-wrapper table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr className="th-compare">
-                        <th valign="middle">Action</th>
-                        <td valign="middle" className="item-row">
-                          <button type="button" className="remove-compare">
-                            <i className="anm anm-times-l" aria-hidden="true" />
-                          </button>
-                        </td>
-                        <td className="item-row">
-                          <button type="button" className="remove-compare">
-                            <i className="anm anm-times-l" aria-hidden="true" />
-                          </button>
-                        </td>
-                        <td className="item-row">
-                          <button type="button" className="remove-compare">
-                            <i className="anm anm-times-l" aria-hidden="true" />
-                          </button>
-                        </td>
-                        <td className="item-row">
-                          <button type="button" className="remove-compare">
-                            <i className="anm anm-times-l" aria-hidden="true" />
-                          </button>
-                        </td>
-                        <td className="item-row">
-                          <button type="button" className="remove-compare">
-                            <i className="anm anm-times-l" aria-hidden="true" />
-                          </button>
-                        </td>
-                      </tr>
-                    </thead>
-                    <tbody id="table-compare">
-                      <tr>
-                        <th valign="middle" className="product-name">
-                          Product Name
-                        </th>
-                        <td valign="middle" className="grid-link__title">
-                          Edna Dress
-                        </td>
-                        <td className="grid-link__title">
-                          Elastic Waist Dress
-                        </td>
-                        <td className="grid-link__title">
-                          3/4 Sleeve Kimono Dress
-                        </td>
-                        <td className="grid-link__title">Cape Dress</td>
-                        <td className="grid-link__title">Cape Dress</td>
-                      </tr>
-                      <tr>
-                        <th valign="middle" className="product-name">
-                          Product Image
-                        </th>
-                        <td valign="middle" className="item-row">
-                          <img
-                            src="assets/images/product-images/product-image16.jpg"
-                            alt
-                            className="featured-image"
-                          />
-                          <div className="product-price product_price">
-                            <span>$89,00</span>
-                          </div>
-                          <form className="variants clearfix">
-                            <input type="hidden" />
-                            <button
-                              title="Add to Cart"
-                              className="add-to-cart btn btn-solid"
-                            >
-                              Add to Cart
-                            </button>
-                          </form>
-                          <p className="grid-link__title hidden">Cut Dress</p>
-                        </td>
-                        <td className="item-row">
-                          <img
-                            src="assets/images/product-images/product-image18.jpg"
-                            alt
-                            className="featured-image"
-                          />
-                          <div className="product-price product_price">
-                            <span>$89,00</span>
-                          </div>
-                          <form className="variants clearfix">
-                            <input type="hidden" />
-                            <button
-                              title="Add to Cart"
-                              className="add-to-cart btn btn-solid"
-                            >
-                              Add to Cart
-                            </button>
-                          </form>
-                          <p className="grid-link__title hidden">Cut Dress</p>
-                        </td>
-                        <td className="item-row">
-                          <img
-                            src="assets/images/product-images/product-image20.jpg"
-                            alt
-                            className="featured-image"
-                          />
-                          <div className="product-price product_price">
-                            <span>$89,00</span>
-                          </div>
-                          <form className="variants clearfix">
-                            <input type="hidden" />
-                            <button
-                              title="Add to Cart"
-                              className="add-to-cart btn btn-solid"
-                            >
-                              Add to Cart
-                            </button>
-                          </form>
-                          <p className="grid-link__title hidden">Cut Dress</p>
-                        </td>
-                        <td className="item-row">
-                          <img
-                            src="assets/images/product-images/product-image23.jpg"
-                            alt
-                            className="featured-image"
-                          />
-                          <div className="product-price product_price">
-                            <span>$89,00</span>
-                          </div>
-                          <form className="variants clearfix">
-                            <input type="hidden" />
-                            <button
-                              title="Add to Cart"
-                              className="add-to-cart btn btn-solid"
-                            >
-                              Add to Cart
-                            </button>
-                          </form>
-                          <p className="grid-link__title hidden">Cut Dress</p>
-                        </td>
-                        <td className="item-row">
-                          <img
-                            src="assets/images/product-images/product-image28.jpg"
-                            alt
-                            className="featured-image"
-                          />
-                          <div className="product-price product_price">
-                            <span>$89,00</span>
-                          </div>
-                          <form className="variants clearfix">
-                            <input type="hidden" />
-                            <button
-                              title="Add to Cart"
-                              className="add-to-cart btn btn-solid"
-                            >
-                              Add to Cart
-                            </button>
-                          </form>
-                          <p className="grid-link__title hidden">Cut Dress</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th valign="middle" className="product-name">
-                          Product Description
-                        </th>
-                        <td valign="middle" className="item-row">
-                          <p className="description-compare">
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry.
-                          </p>
-                        </td>
-                        <td className="item-row">
-                          <p className="description-compare">
-                            It is a long established fact that a reader will be
-                            distracted by the readable content of a page when
-                            looking at its layout.
-                          </p>
-                        </td>
-                        <td className="item-row">
-                          <p className="description-compare">
-                            There are many variations of passages of Lorem Ipsum
-                            available, but the majority have suffered
-                            alteration.
-                          </p>
-                        </td>
-                        <td className="item-row">
-                          <p className="description-compare">
-                            The standard chunk of Lorem Ipsum used since the
-                            1500s is reproduced below for those interested.
-                          </p>
-                        </td>
-                        <td className="item-row">
-                          <p className="description-compare">
-                            The standard chunk of Lorem Ipsum used since the
-                            1500s is reproduced below for those interested.
-                          </p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th valign="middle" className="product-name">
-                          Availability
-                        </th>
-                        <td valign="middle" className="available-stock">
-                          <p>In stock</p>
-                        </td>
-                        <td className="available-stock">
-                          <p>In stock</p>
-                        </td>
-                        <td className="available-stock">
-                          <p>In stock</p>
-                        </td>
-                        <td className="available-stock">
-                          <p>In stock</p>
-                        </td>
-                        <td className="available-stock">
-                          <p>In stock</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+        {getcomparelist.length !== 0 ? (
+          <div className="container">
+            <div className="row">
+              <div className="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                <div className="compare-page">
+                  <div className="table-wrapper table-responsive">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Action</th>
+                          {getcomparelist &&
+                            getcomparelist.map((product, id) => (
+                              <td>
+                                <Close
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => dlt(product.id)}
+                                />
+                              </td>
+                            ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>Product Name</th>
+                          {getcomparelist &&
+                            getcomparelist.map((product, id) => (
+                              <td>{product.name}</td>
+                            ))}
+                        </tr>
+                        <tr>
+                          <th>Product Image</th>
+                          {getcomparelist &&
+                            getcomparelist.map((product, id) => (
+                              <td>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    height: "220px",
+                                  }}
+                                >
+                                  <img
+                                    style={{ height: "12rem" }}
+                                    src={product.img_data}
+                                  />
+                                </div>
+                              </td>
+                            ))}
+                        </tr>
+                        <tr>
+                          <th valign="middle" className="product-name">
+                            Product Price
+                          </th>
+                          {getcomparelist &&
+                            getcomparelist.map((product, id) => (
+                              <td>{product.discount_price}</td>
+                            ))}
+                        </tr>
+                        <tr>
+                          <th>Availability</th>
+
+                          {getcomparelist &&
+                            getcomparelist.map((product, id) => (
+                              <td>
+                                <p>In stock</p>
+                                <button
+                                  title="Add to Cart"
+                                  className="add-to-cart btn btn-solid"
+                                >
+                                  Add to Cart
+                                </button>
+                              </td>
+                            ))}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="container">
+            <div className="row">
+              <div className="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div className="empty-page-content text-center">
+                  <h1>No Products Found!</h1>
+                  <Button>
+                    <Link
+                      to="/"
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      Go back to Home
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <Footer />

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useSelector } from "react-redux";
 import {
   ArrowDropDown,
   LockReset,
@@ -13,9 +14,14 @@ import {
   StarBorder,
   Toc,
 } from "@mui/icons-material";
+
 const TopHeader = () => {
   const [loggedIn, setLoggedIn] = React.useState(true);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const getcomparelist = useSelector(
+    (state) => state.comparereducer.comparelist
+  );
+
   const openUser = Boolean(anchorElUser);
   const handleUserClick = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -42,13 +48,13 @@ const TopHeader = () => {
       }}
     >
       <div className="container-fluid">
-        <div className="row">
+        <div className="row d-flex justify-content-between align-items-center">
           <div className="col-10 col-sm-8 col-md-5 col-lg-4">
             <p>
               <i className="anm anm-phone-s" /> +880 9678303030
             </p>
           </div>
-          <div className="col-sm-4 col-md-4 col-lg-4 d-none d-lg-none d-md-block d-lg-block">
+          <div className="col-sm-4 col-md-4 col-lg-4 d-none d-md-block d-lg-block">
             <div className="text-center">
               <p className="top-header_middle-text">
                 FAIR ELECTRONICS LIMITED | FAIR GROUP
@@ -117,7 +123,7 @@ const TopHeader = () => {
             {loggedIn ? (
               <ul className="customer-links list-inline">
                 <li>
-                  <Link to="/compare">Compare(0)</Link>
+                  <Link to="/compare">Compare({getcomparelist.length})</Link>
                 </li>
                 <li>
                   <Button
@@ -184,7 +190,7 @@ const TopHeader = () => {
             ) : (
               <ul className="customer-links list-inline">
                 <li>
-                  <Link to="/compare">Compare(0)</Link>
+                  <Link to="/compare">Compare({getcomparelist.length})</Link>
                 </li>
                 <li>
                   <Link to="/login">Login</Link>
